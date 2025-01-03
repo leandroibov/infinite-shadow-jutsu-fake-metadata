@@ -1,0 +1,193 @@
+#!/bin/bash
+#Jutsu Tor2 Failsafe, amnesiac
+
+#variable domain to get from data base of domains randomically and add to it...
+#database file domains.txt
+#domain="";
+
+#variable time to get randomlly time from 60 seconds to 2,5 hours
+#time="";
+
+#variable mac to mac spoofing from mac spoofing vendors list called macvendors.txt
+#mac="";
+
+#variable net to subscribe the network interface of your preference...
+#net="";
+
+#bridges list collected called bridges.txt
+#bridges="";
+
+#variables min_time and max_time to define the time range durantion for each command of the bot...
+#min_time="";
+#max_time="";
+
+#ask user to inform network interface. Required cause some system can be using more than one interface...
+
+#generate mac spoofing list for macvendors.txt
+
+#create new tor browser
+
+
+###
+
+
+echo;
+echo "To make the bot work, you need to configure 'about:preferences#connection' in the first session to 'Always connect automatically'."
+echo "Set up a bridge or no bridge according to your plan for creating fake metadata."
+echo "Restart the Tor Browser or click 'Connect' to start."
+echo "In future sessions, everything will be automated in an infinite loop..."
+echo "To turn off the program, if Ctrl + C doesn't work, you need to close the terminal, go to /dev/shm, and manually delete the Tor Browser folders!"
+echo "-------------------------------------------------------------------------------";
+read -rp "Do you understand and wish to proceed? (Type 'ok' or 'exit'): " response
+echo "-------------------------------------------------------------------------------";
+
+# Check if the input is either 'ok' or 'exit'
+if [[ "$response" == "ok" ]]; then
+    echo "Proceeding..."
+    # Continue with the script
+elif [[ "$response" == "exit" ]]; then
+    echo "Exiting..."
+    exit 0  # Exit the script
+else
+    echo "Invalid input. You must type 'ok' to proceed or 'exit' to quit."
+    exit 1  # Exit with an error code
+fi
+echo "";
+
+# Caminhos para a pasta e o arquivo
+tor_folder="$HOME/Downloads/tor-browser2"
+tor_executable="$HOME/Downloads/tor-browser2/Browser/start-tor-browser"
+
+# Check if the tor-browser2 folder and the start-tor-browser file exist
+if [ ! -d "$tor_folder" ] || [ ! -f "$tor_executable" ]; then
+    # If the folder or file does not exist, notify the user to install Tor Browser
+    echo "Tor Browser not found. Please install Tor Browser in the $HOME/Downloads/"
+    echo "The $tor_folder folder will be created for you to install Tor Browser. Copy and rename for tor-browser2 in Downloads folder"
+    read -rp "The program will finish (Type 'ok' or 'any key'): " response1
+    exit 1  # Exit the script with an error code
+else
+    # If both exist, notify that Tor Browser is correctly installed
+    echo "Tor Browser is already installed in $tor_folder."
+fi
+echo
+
+
+# Verifica se o firejail está instalado
+if ! command -v firejail &> /dev/null; then
+    # Se o firejail não estiver instalado, avisa o usuário e sai
+    echo "Firejail is not installed. Please install it using: sudo apt install firejail"
+    read -rp "The program will finish (Type 'ok' or 'any key'): " response1
+    exit 1  # Exit the script with an error code
+else
+    # Se o firejail estiver instalado, confirma
+    echo "Firejail is installed. Proceeding..."
+fi
+
+
+
+# File path
+file="$HOME/Downloads/domain/domain.txt"
+
+# Check if the file exists
+if [ ! -f "$file" ]; then
+    # If the file doesn't exist, notify the user to install it and exit
+    echo "File $file not found. Please install the domain database."
+    read -rp "The program will finish (Type 'ok' or 'any key'): " response1
+    exit 1  # Exit the script with an error code
+else
+    # If the file exists, confirm everything is set up
+    echo "File $file found. Everything is set up."
+fi
+
+
+
+echo "----------------------------------------------------------------------------------------------------";
+echo "Browsing Infinite Shadow Jutsu Fake Metadata TOR_2 running in shared memory (failsafe, amnesiac)";
+echo "----------------------------------------------------------------------------------------------------";
+read -rp "Enter the MAC address you want to register for the Firejail MAC spoofing command: " mac
+echo "The chosen MAC address is: $mac"
+echo "";
+read -rp "Enter the network interface you want to connect to for the Firejail command: " rede
+echo "The chosen network interface is: $rede"
+echo "";
+echo "Time Range: Recommended 5 minutes to 20 minutes or 300 to 1200 seconds!"
+read -rp "Enter the minimum time value in seconds: " min_time
+echo "Chosen minimum time: $min_time"
+echo ""
+read -rp "Enter the maximum time value in seconds: " max_time
+echo "Chosen maximum time: $max_time"
+echo ""
+
+#echo "";
+#read -rp "Enter the bridge obfs4 number 1: " bridge1
+#echo "Bridge 1 choosen was: $bridge1"
+#echo "";
+
+#echo "";
+#read -rp "Enter the bridge obfs4 number 2: " bridge2
+#echo "Bridge 2 choosen was: $bridge2"
+#echo "";
+
+
+echo "Copying tor-browser2 folder to shared memory..."
+echo "cp -r ~/Downloads/tor-browser2/ /dev/shm;";
+cp -r ~/Downloads/tor-browser2/ /dev/shm;
+echo;
+
+#shared memory bot
+#echo "Subscribing bridges obfs4 in torrc file of tor browser...";
+#cat > /dev/shm/tor-browser2/Browser/TorBrowser/Data/Tor/torrc << EOF 
+# This file was generated by Tor; if you edit it, comments will not be preserved
+# The old torrc file was renamed to torrc.orig.1, and Tor will ignore it
+
+#Bridge $bridge1
+#Bridge $bridge2
+#ClientOnionAuthDir /dev/shm/tor-browser2/Browser/TorBrowser/Data/Tor/onion-auth
+#DataDirectory /dev/shm/tor-browser2/Browser/TorBrowser/Data/Tor
+#GeoIPFile /dev/shm/tor-browser2/Browser/TorBrowser/Data/Tor/geoip
+#GeoIPv6File /dev/shm/tor-browser2/Browser/TorBrowser/Data/Tor/geoip6
+#UseBridges 1
+
+#EOF
+
+
+while true
+do
+
+# Generate randomly a value between 300 and 7200 or other preferences...
+time=$(shuf -i $min_time-$max_time -n 1)
+
+# Show the value of time for this connection
+echo "Randomly chosen time in seconds: $time"
+
+# Select a random line and assign it to the variable domain to create connection fake navigation
+    domain=$(shuf -n 1 "$file")
+    echo "Randomly selected domain: $domain"
+    echo "----------------------------------------------------------------------------------------------------";
+echo "Control + C to stop Shadow Jutsu Bot";
+echo "if not work, turn off terminal and deleting manually go to";
+echo "cd /dev/shm/ and rm -rf in the tor folder you need to delete... Ex: tor-browser tor-browser2 etc...;";
+#echo "Use command below to delete tor folder in shared memory...";
+#echo "rm -rf /dev/shm/tor-browser2;";
+echo "----------------------------------------------------------------------------------------------------";
+
+#PRINCIPAIS PAGES DE VENDAS
+
+
+#***randomlly with variables
+echo;
+echo "timeout $time firejail --noprofile --ipc-namespace --machine-id --novideo --caps.drop=all --private-tmp --net="$rede" --mac="$mac" /dev/shm/tor-browser2/Browser/start-tor-browser "$domain";";
+timeout $time firejail --noprofile --ipc-namespace --machine-id --novideo --caps.drop=all --private-tmp --net="$rede" --mac="$mac" /dev/shm/tor-browser2/Browser/start-tor-browser "$domain";
+
+
+done
+echo;
+
+echo "Deleting tor-browser folder from shared memory and destructing bridges metadata files..."
+echo "rm -rf /dev/shm/tor-browser2/;";
+rm -rf /dev/shm/tor-browser2;
+echo;
+
+
+
+

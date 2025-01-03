@@ -1,0 +1,184 @@
+#!/bin/bash
+#i2p fake metadata generator using mullvad browser installed in Downloads folder...
+
+#variable domain to get from data base of domains randomically and add to it...
+#database file domains.txt
+#domain="";
+
+#variable time to get randomlly time from 60 seconds to 2,5 hours
+#time="";
+
+#variable mac to mac spoofing from mac spoofing vendors list called macvendors.txt
+#mac="";
+
+#variable net to subscribe the network interface of your preference...
+#net="";
+
+#bridges list collected called bridges.txt
+#bridges="";
+
+#variables min_time and max_time to define the time range durantion for each command of the bot...
+#min_time="";
+#max_time="";
+
+#ask user to inform network interface. Required cause some system can be using more than one interface...
+
+#generate mac spoofing list for macvendors.txt
+
+#create new tor browser
+
+
+###
+echo;
+echo "i2p Shadown Jutsu fake metadada generator bot";
+echo "To make the bot work, you need to install mullvad-browser in Downloads folder and configure in mullvad browser 'about:preferences' in the network in the first session of the bot";
+echo "In network connection, manual configuration proxy in http and https type: 127.0.0.1 port 4444";
+echo "Install i2p in $HOME/Downloads/ in i2p folder you can create and start i2p and check if it is working...";
+echo "In future sessions, everything will be automated in an infinite loop..."
+echo "Configuration i2p links";
+echo "http://127.0.0.1:7657/welcome";
+echo "http://127.0.0.1:7657/home";
+echo "-------------------------------------------------------------------------------";
+read -rp "Do you understand and wish to proceed? (Type 'ok' or 'exit'): " response
+echo "-------------------------------------------------------------------------------";
+
+# Check if the input is either 'ok' or 'exit'
+if [[ "$response" == "ok" ]]; then
+    echo "Proceeding..."
+    # Continue with the script
+elif [[ "$response" == "exit" ]]; then
+    echo "Exiting..."
+    exit 0  # Exit the script
+else
+    echo "Invalid input. You must type 'ok' to proceed or 'exit' to quit."
+    exit 1  # Exit with an error code
+fi
+echo "";
+
+# Addresses for the mullvad browser and i2p folder...
+mullvad_folder="$HOME/Downloads/mullvad-browser"
+mullvad_executable="$HOME/Downloads/mullvad-browser/Browser/start-mullvad-browser"
+
+# Check if the mullvad-browser folder and the start-mullvad-browser file exist
+if [ ! -d "$mullvad_folder" ] || [ ! -f "$mullvad_executable" ]; then
+    # If the folder or file does not exist, notify the user to install Tor Browser
+    echo "Mullvad Browser not found. Please install Mullvad Browser in the $HOME/Downloads/"
+    echo "The $mullvad_folder folder will be created for you to install Mullvad Browser."
+    read -rp "The program will finish (Type 'ok' or 'any key'): " response1
+    exit 1  # Exit the script with an error code
+else
+    # If both exist, notify that Tor Browser is correctly installed
+    echo "Mullvad Browser is already installed in $mullvad_folder."
+fi
+echo
+
+# Define the folder and executable path of i2p
+i2p_folder="$HOME/Downloads/i2p/"
+i2p_executable="$HOME/Downloads/i2p/i2prouter"
+
+# Check if the folder and executable exist
+if [ ! -d "$i2p_folder" ] || [ ! -f "$i2p_executable" ]; then
+    # If either the folder or the executable doesn't exist, inform the user and exit
+    echo "I2P not found. Please install I2P in the folder $HOME/Downloads/i2p/."
+    echo "The $i2p_folder directory should be created for I2P installation and use it in the bot."
+    read -rp "The program will finish (Type 'ok' or 'any key'): " response1
+    exit 1  # Exit the script with an error code
+else
+    # If both exist, inform the user and proceed
+    echo "I2P is installed correctly in $i2p_folder."
+    # Continue with the rest of the script...
+fi
+echo
+
+
+# Check if firejail is installed
+if ! command -v firejail &> /dev/null; then
+    # If firejail is not installed, notify the user and exit
+    echo "Firejail is not installed. Please install it using: sudo apt install firejail"
+    read -rp "The program will finish (Type 'ok' or 'any key'): " response1
+    exit 1  # Exit the script with an error code
+else
+    # If firejail is installed, confirm
+    echo "Firejail is installed. Proceeding..."
+fi
+echo;
+
+
+
+# File path
+file="$HOME/Downloads/domain/domain.txt"
+
+# Check if the file exists
+if [ ! -f "$file" ]; then
+    # If the file doesn't exist, notify the user to install it and exit
+    echo "File $file not found. Please install the domain database. Copy and Paste it to Downloads folder"
+    read -rp "The program will finish (Type 'ok' or 'any key'): " response1
+    exit 1  # Exit the script with an error code
+else
+    # If the file exists, confirm everything is set up
+    echo "File $file found. Everything is set up."
+fi
+
+
+
+echo "----------------------------------------------------------------------------------------------------";
+echo "Infinite Shadow Jutsu Fake Metadata I2P";
+echo "----------------------------------------------------------------------------------------------------";
+#read -rp "Enter the MAC address you want to register for the Firejail MAC spoofing command: " mac
+#echo "The chosen MAC address is: $mac"
+#echo "";
+#read -rp "Enter the network interface you want to connect to for the Firejail command: " rede
+#echo "The chosen network interface is: $rede"
+#echo "";
+echo "Time Range: Recommended 5 minutes to 20 minutes or 300 to 1200 seconds!"
+read -rp "Enter the minimum time value in seconds: " min_time
+echo "Chosen minimum time: $min_time"
+echo ""
+read -rp "Enter the maximum time value in seconds: " max_time
+echo "Chosen maximum time: $max_time"
+echo ""
+
+
+#Start and Restarting i2p router...
+echo "Restarting i2prouter"
+echo "$HOME/Downloads/i2p/i2prouter";
+$HOME/Downloads/i2p/i2prouter restart;
+
+
+while true
+do
+echo;
+# Generate randomly a value between 300 and 7200 or other preferences...
+#time=$(shuf -i 300-1200 -n 1)
+time=$(shuf -i $min_time-$max_time -n 1)
+
+# Show the value of time for this connection
+echo "Randomly chosen time in seconds: $time"
+
+
+# Select a random line and assign it to the variable domain to create connection fake navigation
+    domain=$(shuf -n 1 "$file")
+    echo "Randomly selected domain: $domain"
+    echo "----------------------------------------------------------------------------------------------------";
+echo "Control + C to stop Shadow Jutsu Bot";
+echo "----------------------------------------------------------------------------------------------------";
+
+#PRINCIPAIS PAGES DE VENDAS
+#timeout 60 $HOME/Downloads/mullvad-browser/Browser/start-mullvad-browser https://duckduckgo.com/;
+
+#***randomlly with variables
+echo;
+echo "timeout $time $HOME/Downloads/mullvad-browser/Browser/start-mullvad-browser "$domain";";
+#This firejail command do not work with i2p
+#We will use i2p with no firejail at least I finish studing and find a solution to mac vendor spoofing...
+#timeout $time firejail --noprofile --ipc-namespace --machine-id --novideo --caps.drop=all --private-tmp --net="$rede" --mac="$mac" $HOME/Downloads/mullvad-browser/Browser/start-mullvad-browser "$domain";
+timeout $time $HOME/Downloads/mullvad-browser/Browser/start-mullvad-browser "$domain";
+
+#***manual
+#timeout 60 firejail --noprofile --ipc-namespace --machine-id --novideo --caps.drop=all --private-tmp --net=enp2s0 --mac=00:06:1B:62:90:b2 $HOME/Downloads/mullvad-browser/Browser/start-mullvad-browser https://duckduckgo.com/;
+done
+
+
+
+
+

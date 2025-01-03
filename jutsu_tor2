@@ -1,0 +1,153 @@
+#!/bin/bash
+
+#variable domain to get from data base of domains randomically and add to it...
+#database file domains.txt
+#domain="";
+
+#variable time to get randomlly time from 60 seconds to 2,5 hours
+#time="";
+
+#variable mac to mac spoofing from mac spoofing vendors list called macvendors.txt
+#mac="";
+
+#variable net to subscribe the network interface of your preference...
+#net="";
+
+#bridges list collected called bridges.txt
+#bridges="";
+
+#variables min_time and max_time to define the time range durantion for each command of the bot...
+#min_time="";
+#max_time="";
+
+#ask user to inform network interface. Required cause some system can be using more than one interface...
+
+#generate mac spoofing list for macvendors.txt
+
+#create new tor browser
+
+
+###
+echo;
+echo "To make the bot work, you need to configure 'about:preferences#connection' in the first session to 'Always connect automatically'."
+echo "Set up a bridge or no bridge according to your plan for creating fake metadata."
+echo "Restart the Tor Browser or click 'Connect' to start."
+echo "In future sessions, everything will be automated in an infinite loop..."
+echo "-------------------------------------------------------------------------------";
+read -rp "Do you understand and wish to proceed? (Type 'ok' or 'exit'): " response
+echo "-------------------------------------------------------------------------------";
+
+# Check if the input is either 'ok' or 'exit'
+if [[ "$response" == "ok" ]]; then
+    echo "Proceeding..."
+    # Continue with the script
+elif [[ "$response" == "exit" ]]; then
+    echo "Exiting..."
+    exit 0  # Exit the script
+else
+    echo "Invalid input. You must type 'ok' to proceed or 'exit' to quit."
+    exit 1  # Exit with an error code
+fi
+echo "";
+
+# Caminhos para a pasta e o arquivo
+tor_folder="$HOME/Downloads/tor-browser2"
+tor_executable="$HOME/Downloads/tor-browser2/Browser/start-tor-browser"
+
+# Check if the tor-browser2 folder and the start-tor-browser file exist
+if [ ! -d "$tor_folder" ] || [ ! -f "$tor_executable" ]; then
+    # If the folder or file does not exist, notify the user to install Tor Browser
+    echo "Tor Browser not found. Please install Tor Browser in the $HOME/Downloads/"
+    echo "The $tor_folder folder will be created for you to install Tor Browser. Copy and rename it to tor-browser2 manually!"
+    read -rp "The program will finish (Type 'ok' or 'any key'): " response1
+    exit 1  # Exit the script with an error code
+else
+    # If both exist, notify that Tor Browser is correctly installed
+    echo "Tor Browser is already installed in $tor_folder."
+fi
+echo
+
+#!/bin/bash
+
+# Verifica se o firejail está instalado
+if ! command -v firejail &> /dev/null; then
+    # Se o firejail não estiver instalado, avisa o usuário e sai
+    echo "Firejail is not installed. Please install it using: sudo apt install firejail"
+    read -rp "The program will finish (Type 'ok' or 'any key'): " response1
+    exit 1  # Exit the script with an error code
+else
+    # Se o firejail estiver instalado, confirma
+    echo "Firejail is installed. Proceeding..."
+fi
+
+
+
+# File path
+file="$HOME/Downloads/domain/domain.txt"
+
+# Check if the file exists
+if [ ! -f "$file" ]; then
+    # If the file doesn't exist, notify the user to install it and exit
+    echo "File $file not found. Please install the domain database."
+    read -rp "The program will finish (Type 'ok' or 'any key'): " response1
+    exit 1  # Exit the script with an error code
+else
+    # If the file exists, confirm everything is set up
+    echo "File $file found. Everything is set up."
+fi
+
+
+
+echo "----------------------------------------------------------------------------------------------------";
+echo "Basic Infinite Shadow Jutsu Fake Metadata TOR2";
+echo "----------------------------------------------------------------------------------------------------";
+read -rp "Enter the MAC address you want to register for the Firejail MAC spoofing command: " mac
+echo "The chosen MAC address is: $mac"
+echo "";
+read -rp "Enter the network interface you want to connect to for the Firejail command: " rede
+echo "The chosen network interface is: $rede"
+echo "";
+echo "Time Range: Recommended 5 minutes to 20 minutes or 300 to 1200 seconds!"
+read -rp "Enter the minimum time value in seconds: " min_time
+echo "Chosen minimum time: $min_time"
+echo ""
+read -rp "Enter the maximum time value in seconds: " max_time
+echo "Chosen maximum time: $max_time"
+echo ""
+
+
+while true
+do
+
+# Generate randomly a value between 300 and 7200 or other preferences...
+#time=$(shuf -i 300-1200 -n 1)
+time=$(shuf -i $min_time-$max_time -n 1)
+
+# Show the value of time for this connection
+echo "Randomly chosen time in seconds: $time"
+
+# Select a random line and assign it to the variable domain to create connection fake navigation
+    domain=$(shuf -n 1 "$file")
+    echo "Randomly selected domain: $domain"
+    echo "----------------------------------------------------------------------------------------------------";
+echo "Control + C to stop Shadow Jutsu Bot";
+echo "if not work, turn off terminal and deleting manually go to";
+echo "cd /dev/shm/ and rm -rf in the tor folder you need to delete... Ex: tor-browser tor-browser2 etc...;";
+echo "----------------------------------------------------------------------------------------------------";
+
+#PRINCIPAIS PAGES DE VENDAS
+#timeout 60 $HOME/Downloads/tor-browser2/Browser/start-tor-browser https://duckduckgo.com/;
+
+#***randomlly with variables
+echo;
+echo "timeout $time firejail --noprofile --ipc-namespace --machine-id --novideo --caps.drop=all --private-tmp --net="$rede" --mac="$mac" $HOME/Downloads/tor-browser2/Browser/start-tor-browser "$domain";";
+timeout $time firejail --noprofile --ipc-namespace --machine-id --novideo --caps.drop=all --private-tmp --net="$rede" --mac="$mac" $HOME/Downloads/tor-browser2/Browser/start-tor-browser "$domain";
+
+#***manual
+#timeout 60 firejail --noprofile --ipc-namespace --machine-id --novideo --caps.drop=all --private-tmp --net=enp2s0 --mac=00:06:1B:62:90:b2 $HOME/Downloads/tor-browser2/Browser/start-tor-browser https://duckduckgo.com/;
+done
+
+
+
+
+
